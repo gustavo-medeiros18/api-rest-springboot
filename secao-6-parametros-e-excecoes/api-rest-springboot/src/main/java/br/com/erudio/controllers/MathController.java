@@ -68,6 +68,20 @@ public class MathController {
     return convertToDouble(numberOne) / convertToDouble(numberTwo);
   }
 
+  @RequestMapping(
+      value = "avg/{numberOne}/{numberTwo}",
+      method = RequestMethod.GET
+  )
+  public Double avg(
+      @PathVariable(value = "numberOne") String numberOne,
+      @PathVariable(value = "numberTwo") String numberTwo
+  ) throws Exception {
+    if (!isNumeric(numberOne) || !isNumeric(numberTwo))
+      throw new UnsupportedMathOperationException("Please set a numeric value!");
+
+    return (convertToDouble(numberOne) + convertToDouble(numberTwo)) / 2;
+  }
+
   private Double convertToDouble(String strNumber) {
     if (strNumber == null) return 0D;
 
