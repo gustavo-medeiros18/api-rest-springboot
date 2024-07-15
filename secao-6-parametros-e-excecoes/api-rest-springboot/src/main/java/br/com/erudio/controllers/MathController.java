@@ -6,12 +6,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.concurrent.atomic.AtomicLong;
 
 @RestController()
-@RequestMapping("/sum")
+@RequestMapping()
 public class MathController {
   private final AtomicLong counter = new AtomicLong();
 
   @RequestMapping(
-      value = "/{numberOne}/{numberTwo}",
+      value = "sum/{numberOne}/{numberTwo}",
       method = RequestMethod.GET
   )
   public Double sum(
@@ -22,6 +22,20 @@ public class MathController {
       throw new UnsupportedMathOperationException("Please set a numeric value!");
 
     return convertToDouble(numberOne) + convertToDouble(numberTwo);
+  }
+
+  @RequestMapping(
+      value = "sub/{numberOne}/{numberTwo}",
+      method = RequestMethod.GET
+  )
+  public Double sub(
+      @PathVariable(value = "numberOne") String numberOne,
+      @PathVariable(value = "numberTwo") String numberTwo
+  ) throws Exception {
+    if (!isNumeric(numberOne) || !isNumeric(numberTwo))
+      throw new UnsupportedMathOperationException("Please set a numeric value!");
+
+    return convertToDouble(numberOne) - convertToDouble(numberTwo);
   }
 
   private Double convertToDouble(String strNumber) {
