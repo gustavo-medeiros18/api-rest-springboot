@@ -1,22 +1,26 @@
 package br.com.erudio.controllers;
 
+import br.com.erudio.model.Person;
+import br.com.erudio.services.PersonServices;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.concurrent.atomic.AtomicLong;
 
 @RestController()
-@RequestMapping()
+@RequestMapping("/person")
 public class PersonController {
-  private final AtomicLong counter = new AtomicLong();
+  @Autowired
+  private PersonServices service;
 
   @RequestMapping(
-      value = "sum/{numberOne}/{numberTwo}",
-      method = RequestMethod.GET
+      value = "/{id}",
+      method = RequestMethod.GET,
+      produces = MediaType.APPLICATION_JSON_VALUE
   )
-  public Double sum(
-      @PathVariable(value = "numberOne") String numberOne,
-      @PathVariable(value = "numberTwo") String numberTwo
+  public Person findById(
+      @PathVariable(value = "id") String id
   ) {
-    return 1D;
+    return service.findById(id);
   }
 }
