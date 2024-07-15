@@ -25,10 +25,10 @@ public class MathController {
   }
 
   @RequestMapping(
-      value = "sub/{numberOne}/{numberTwo}",
+      value = "subtraction/{numberOne}/{numberTwo}",
       method = RequestMethod.GET
   )
-  public Double sub(
+  public Double subtraction(
       @PathVariable(value = "numberOne") String numberOne,
       @PathVariable(value = "numberTwo") String numberTwo
   ) throws Exception {
@@ -39,10 +39,10 @@ public class MathController {
   }
 
   @RequestMapping(
-      value = "mult/{numberOne}/{numberTwo}",
+      value = "multiplication/{numberOne}/{numberTwo}",
       method = RequestMethod.GET
   )
-  public Double mult(
+  public Double multiplication(
       @PathVariable(value = "numberOne") String numberOne,
       @PathVariable(value = "numberTwo") String numberTwo
   ) throws Exception {
@@ -53,10 +53,10 @@ public class MathController {
   }
 
   @RequestMapping(
-      value = "div/{numberOne}/{numberTwo}",
+      value = "division/{numberOne}/{numberTwo}",
       method = RequestMethod.GET
   )
-  public Double div(
+  public Double division(
       @PathVariable(value = "numberOne") String numberOne,
       @PathVariable(value = "numberTwo") String numberTwo
   ) throws Exception {
@@ -69,10 +69,10 @@ public class MathController {
   }
 
   @RequestMapping(
-      value = "avg/{numberOne}/{numberTwo}",
+      value = "average/{numberOne}/{numberTwo}",
       method = RequestMethod.GET
   )
-  public Double avg(
+  public Double average(
       @PathVariable(value = "numberOne") String numberOne,
       @PathVariable(value = "numberTwo") String numberTwo
   ) throws Exception {
@@ -83,10 +83,10 @@ public class MathController {
   }
 
   @RequestMapping(
-      value = "sqrt/{number}",
+      value = "squareroot/{number}",
       method = RequestMethod.GET
   )
-  public Double sqrt(
+  public Double squareRoot(
       @PathVariable(value = "number") String number
   ) throws Exception {
     if (!isNumeric(number))
