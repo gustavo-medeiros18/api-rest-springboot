@@ -38,6 +38,20 @@ public class MathController {
     return convertToDouble(numberOne) - convertToDouble(numberTwo);
   }
 
+  @RequestMapping(
+      value = "mult/{numberOne}/{numberTwo}",
+      method = RequestMethod.GET
+  )
+  public Double mult(
+      @PathVariable(value = "numberOne") String numberOne,
+      @PathVariable(value = "numberTwo") String numberTwo
+  ) throws Exception {
+    if (!isNumeric(numberOne) || !isNumeric(numberTwo))
+      throw new UnsupportedMathOperationException("Please set a numeric value!");
+
+    return convertToDouble(numberOne) * convertToDouble(numberTwo);
+  }
+
   private Double convertToDouble(String strNumber) {
     if (strNumber == null) return 0D;
 
