@@ -6,7 +6,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 @RestController()
 @RequestMapping()
-public class MathController {
+public class PersonController {
   private final AtomicLong counter = new AtomicLong();
 
   @RequestMapping(
