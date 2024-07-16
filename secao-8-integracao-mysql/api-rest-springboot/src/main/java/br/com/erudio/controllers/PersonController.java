@@ -8,16 +8,14 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
 @RestController()
 @RequestMapping("/person")
 public class PersonController {
   @Autowired
   private PersonServices service;
 
-  @RequestMapping(
+  @GetMapping(
       value = "/{id}",
-      method = RequestMethod.GET,
       produces = MediaType.APPLICATION_JSON_VALUE
   )
   public Person findById(
@@ -26,16 +24,14 @@ public class PersonController {
     return service.findById(id);
   }
 
-  @RequestMapping(
-      method = RequestMethod.GET,
+  @GetMapping(
       produces = MediaType.APPLICATION_JSON_VALUE
   )
   public List<Person> findAll() {
     return service.findAll();
   }
 
-  @RequestMapping(
-      method = RequestMethod.POST,
+  @PostMapping(
       consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE
   )
@@ -45,8 +41,7 @@ public class PersonController {
     return service.createPerson(person);
   }
 
-  @RequestMapping(
-      method = RequestMethod.PUT,
+  @PutMapping(
       consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE
   )
@@ -56,9 +51,8 @@ public class PersonController {
     return service.updatePerson(person);
   }
 
-  @RequestMapping(
-      value = "/{id}",
-      method = RequestMethod.DELETE
+  @DeleteMapping(
+      value = "/{id}"
   )
   public void delete(
       @PathVariable(value = "id") Long id
