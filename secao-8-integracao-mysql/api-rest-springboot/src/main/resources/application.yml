@@ -1,6 +1,6 @@
 # DOCS
 spring:
-    # Configuração do servidor embutido Tomcat.
+  # Configuração do servidor embutido Tomcat.
   datasource:
     # Configuração do pool DBCP2 de conexões com o banco de dados.
     dbcp2:
