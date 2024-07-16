@@ -1,26 +1,13 @@
-# DOCS
 spring:
-  # Configuração do servidor embutido Tomcat.
   datasource:
-    # Configuração do pool DBCP2 de conexões com o banco de dados.
-    dbcp2:
-      # Define o driver JDBC para conexão com o banco de dados MySQL.
-      driver-class-name: com.mysql.cj.jdbc.Driver
-      # URL de conexão com o banco de dados, incluindo o nome do banco, parâmetros de timezone.
-      url: jdbc:mysql://localhost:3306/rest_with_spring_boot_erudio?useTimezone=true&serverTimezone=UTC
-      # Nome de usuário para autenticação no banco de dados.
-      username: root
-      # Senha para autenticação no banco de dados. Deixado em branco para ser configurado externamente ou por segurança.
-      password:
-    # Configuração do JPA (Java Persistence API) para mapeamento objeto-relacional.
-    jpa:
-      # Configuração do provedor de persistência JPA.
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/rest_with_spring_boot_erudio?useTimezone=true&serverTimezone=UTC
+    username: root
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
       hibernate:
-        # Estratégia de DDL do Hibernate. "update" atualiza o esquema automaticamente.
-        ddl-auto: update
-      properties:
-        hibernate:
-          # Define o dialeto SQL do Hibernate para compatibilidade com MySQL 5 usando InnoDB.
-          dialect: org.hibernate.dialect.MySQL5InnoDBDialect
-        # Habilita a exibição das consultas SQL geradas pelo Hibernate no console.
-        show-sql: true
+        dialect: org.hibernate.dialect.MySQL8Dialect
+    show-sql: false
