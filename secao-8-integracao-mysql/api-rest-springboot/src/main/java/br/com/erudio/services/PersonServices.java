@@ -1,6 +1,8 @@
 package br.com.erudio.services;
 
 import br.com.erudio.model.Person;
+import br.com.erudio.repositories.PersonRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -14,6 +16,9 @@ public class PersonServices {
   private Logger logger = Logger.getLogger(
       PersonServices.class.getName()
   );
+
+  @Autowired
+  private PersonRepository repository;
 
   public List<Person> findAll() {
     logger.info("Finding all people!");
