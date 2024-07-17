@@ -4,6 +4,7 @@ import br.com.erudio.model.Person;
 import br.com.erudio.services.PersonServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -54,9 +55,10 @@ public class PersonController {
   @DeleteMapping(
       value = "/{id}"
   )
-  public void delete(
+  public ResponseEntity<Void> delete(
       @PathVariable(value = "id") Long id
   ) {
     service.delete(id);
+    return ResponseEntity.noContent().build();
   }
 }
