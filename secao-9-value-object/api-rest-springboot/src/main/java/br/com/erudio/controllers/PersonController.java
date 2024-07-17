@@ -1,5 +1,6 @@
 package br.com.erudio.controllers;
 
+import br.com.erudio.data.vo.v1.PersonVO;
 import br.com.erudio.model.Person;
 import br.com.erudio.services.PersonServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ public class PersonController {
       value = "/{id}",
       produces = MediaType.APPLICATION_JSON_VALUE
   )
-  public Person findById(
+  public PersonVO findById(
       @PathVariable(value = "id") Long id
   ) {
     return service.findById(id);
@@ -28,7 +29,7 @@ public class PersonController {
   @GetMapping(
       produces = MediaType.APPLICATION_JSON_VALUE
   )
-  public List<Person> findAll() {
+  public List<PersonVO> findAll() {
     return service.findAll();
   }
 
@@ -36,8 +37,8 @@ public class PersonController {
       consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE
   )
-  public Person createPerson(
-      @RequestBody Person person
+  public PersonVO createPerson(
+      @RequestBody PersonVO person
   ) {
     return service.create(person);
   }
