@@ -47,8 +47,8 @@ public class PersonController {
       consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE
   )
-  public Person updatePerson(
-      @RequestBody Person person
+  public PersonVO updatePerson(
+      @RequestBody PersonVO person
   ) {
     return service.update(person);
   }

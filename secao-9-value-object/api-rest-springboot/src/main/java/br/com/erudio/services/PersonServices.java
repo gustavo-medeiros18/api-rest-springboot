@@ -45,10 +45,10 @@ public class PersonServices {
     return DozerMapper.parseObject(
         repository.save(entity),
         PersonVO.class
-    ) ;
+    );
   }
 
-  public Person update(Person person) {
+  public PersonVO update(PersonVO person) {
     logger.info("Updating one person!");
 
     /**
@@ -66,7 +66,10 @@ public class PersonServices {
     entity.setAddress(person.getAddress());
     entity.setGender(person.getGender());
 
-    return repository.save(entity);
+    return DozerMapper.parseObject(
+        repository.save(entity),
+        PersonVO.class
+    );
   }
 
   public void delete(Long id) {
