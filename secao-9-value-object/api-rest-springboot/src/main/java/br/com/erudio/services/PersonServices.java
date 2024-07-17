@@ -6,9 +6,7 @@ import br.com.erudio.repositories.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Logger;
 
 @Service
@@ -34,13 +32,13 @@ public class PersonServices {
     );
   }
 
-  public Person createPerson(Person person) {
+  public Person create(Person person) {
     logger.info("Creating one person!");
 
     return repository.save(person);
   }
 
-  public Person updatePerson(Person person) {
+  public Person update(Person person) {
     logger.info("Updating one person!");
 
     /**

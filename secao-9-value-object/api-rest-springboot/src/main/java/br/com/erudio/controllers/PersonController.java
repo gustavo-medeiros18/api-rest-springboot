@@ -39,7 +39,7 @@ public class PersonController {
   public Person createPerson(
       @RequestBody Person person
   ) {
-    return service.createPerson(person);
+    return service.create(person);
   }
 
   @PutMapping(
@@ -49,7 +49,7 @@ public class PersonController {
   public Person updatePerson(
       @RequestBody Person person
   ) {
-    return service.updatePerson(person);
+    return service.update(person);
   }
 
   @DeleteMapping(
