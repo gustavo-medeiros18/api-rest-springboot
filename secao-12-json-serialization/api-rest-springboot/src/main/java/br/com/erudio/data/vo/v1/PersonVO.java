@@ -1,15 +1,39 @@
 //DOCS
 package br.com.erudio.data.vo.v1;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
 import java.io.Serializable;
 import java.util.Objects;
 
-
+/**
+ * The JsonPropertyOrder annotation is used to define the order
+ * of the properties in the JSON representation of the object.
+ * More specifically, it is used to define the order of the properties
+ * that will be sent to the client when the object is serialized.
+ */
+@JsonPropertyOrder({"id", "address", "firstName", "lastName", "gender"})
 public class PersonVO implements Serializable {
   private Long id;
+
+  /**
+   * The JsonProperty annotation is used to define the name of the property
+   * in the JSON representation of the object that will be sent to the client.
+   */
+  @JsonProperty("first_name")
   private String firstName;
+
+  @JsonProperty("last_name")
   private String lastName;
   private String address;
+
+  /**
+   * The JsonIgnore annotation is used to ignore a property in the JSON representation
+   * of the object that will be sent to the client.
+   */
+  @JsonIgnore
   private String gender;
 
   public PersonVO() {
