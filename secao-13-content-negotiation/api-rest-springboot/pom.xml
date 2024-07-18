@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Definição do projeto Maven -->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <!-- Versão do modelo POM utilizada -->
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- Definição do projeto pai, que é um starter padrão do Spring Boot -->
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.2.7</version>
+        <relativePath/> <!-- Procura o pai no repositório -->
+    </parent>
+
+    <!-- Informações básicas do projeto -->
+    <groupId>br.com.erudio</groupId> <!-- Identificador único do projeto no repositório -->
+    <artifactId>api-rest-springboot</artifactId> <!-- Nome do artefato gerado pelo projeto -->
+    <version>0.0.1-SNAPSHOT</version> <!-- Versão do projeto -->
+
+    <name>api-rest-springboot</name> <!-- Nome legível do projeto -->
+    <description>api-rest-springboot</description> <!-- Descrição do projeto -->
+    <url/> <!-- URL do projeto (se houver) -->
+
+    <!-- Licença do projeto -->
+    <licenses>
+        <license/>
+    </licenses>
+
+    <!-- Informações dos desenvolvedores do projeto -->
+    <developers>
+        <developer/>
+    </developers>
+
+    <!-- Informações de controle de versão (SCM - Source Code Management) -->
+    <scm>
+        <connection/>
+        <developerConnection/>
+        <tag/>
+        <url/>
+    </scm>
+
+    <!-- Propriedades do projeto -->
+    <properties>
+        <java.version>21</java.version> <!-- Versão do Java utilizada -->
+        <dozer.version>6.4.0</dozer.version> <!-- Versão do Dozer utilizada -->
+    </properties>
+
+    <!-- Dependências do projeto -->
+    <dependencies>
+        <!-- Dependência para o starter web do Spring Boot -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-mysql</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.dozermapper</groupId>
+            <artifactId>dozer-core</artifactId>
+            <version>${dozer.version}</version>
+        </dependency>
+
+        <!-- Dependência para ferramentas de desenvolvimento do Spring Boot -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <scope>runtime</scope> <!-- Disponível apenas em tempo de execução -->
+            <optional>true</optional> <!-- Dependência opcional -->
+        </dependency>
+
+        <!-- Dependência para o starter de testes do Spring Boot -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope> <!-- Disponível apenas no escopo de teste -->
+        </dependency>
+    </dependencies>
+
+    <!-- Configuração de build do projeto -->
+    <build>
+        <plugins>
+            <!-- Plugin do Maven para o Spring Boot -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+</project>
