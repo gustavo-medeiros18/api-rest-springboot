@@ -25,12 +25,10 @@ public class WebConfig implements WebMvcConfigurer {
   @Override
   public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
     configurer
-        // Enable specifying media type through URL parameter.
-        .favorParameter(true)
-        // Set the URL parameter name to specify the media type.
-        .parameterName("mediaType")
-        // Ignore the HTTP Accept header.
-        .ignoreAcceptHeader(true)
+        // Disable specifying media type through URL parameter.
+        .favorParameter(false)
+        // Don't ignore the HTTP Accept header.
+        .ignoreAcceptHeader(false)
         // Allow using any file extension for media types, not just registered ones.
         .useRegisteredExtensionsOnly(false)
         // Set default content type to JSON if no specific media type is requested.
