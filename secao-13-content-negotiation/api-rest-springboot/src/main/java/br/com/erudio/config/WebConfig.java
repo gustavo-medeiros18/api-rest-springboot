@@ -1,9 +1,13 @@
 package br.com.erudio.config;
 
+import br.com.erudio.serialization.converter.YamlJackson2HttpMessageConverter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
+import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import java.util.List;
 
 /**
  * Our WebConfig class must implement the WebMvcConfigurer interface to
@@ -14,6 +18,24 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
+  /**
+   * Constant to represent the 'application/x-yaml' media type.
+   */
+  private static final MediaType MEDIA_TYPE_APPLICATION_YML =
+      MediaType.valueOf("application/x-yaml");
+
+  /**
+   * The extendMessageConverters method is used to add a new message converter
+   * to the list of converters.
+   * <p>
+   * Here, we are adding a new message converter that converts the response
+   * body to YAML format.
+   */
+  @Override
+  public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
+    converters.add(new YamlJackson2HttpMessageConverter());
+  }
+
   /**
    * The configureContentNegotiation method is used to configure the content
    * negotiation strategy.
