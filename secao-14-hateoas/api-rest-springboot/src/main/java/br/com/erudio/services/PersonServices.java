@@ -1,11 +1,16 @@
 package br.com.erudio.services;
 
+import br.com.erudio.controllers.PersonController;
 import br.com.erudio.data.vo.v1.PersonVO;
 import br.com.erudio.exceptions.ResourceNotFoundException;
 import br.com.erudio.mapper.DozerMapper;
 import br.com.erudio.model.Person;
 import br.com.erudio.repositories.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,18 +28,38 @@ public class PersonServices {
   public List<PersonVO> findAll() {
     logger.info("Finding all people!");
 
+    /*
+      The DozerMapper class is a utility class that provides
+      methods to convert objects from one type to another.
+      In our application, it's being used to convert the objects
+      from entities to VOs and vice-versa.
+     */
     return DozerMapper.parseListObjects(repository.findAll(), PersonVO.class);
   }
 
   public PersonVO findById(Long id) {
     logger.info("Finding one person!");
 
-
     var entity = repository.findById(id).orElseThrow(() ->
         new ResourceNotFoundException("No records found for this ID!")
     );
 
-    return DozerMapper.parseObject(entity, PersonVO.class);
+    PersonVO vo = DozerMapper.parseObject(entity, PersonVO.class);
+    /*
+      Adds a HATEOAS link to the PersonVO object, enabling the API client
+      to directly navigate to the Person resource identified by the provided ID.
+
+      The method linkTo(methodOn(PersonController.class).findById(id)) creates a link to
+      the findById method of PersonController, using the Person's ID as a parameter.
+
+      The method withSelfRel() specifies that this is a 'self' link, i.e., a link to
+      the Person resource itself. This enriches the API response with navigation information
+      following HATEOAS principles, facilitating a more discoverable and dynamic interaction
+      with the API.
+     */
+    vo.add(linkTo(methodOn(PersonController.class).findById(id)).withSelfRel());
+
+    return vo;
   }
 
   public PersonVO create(PersonVO person) {
