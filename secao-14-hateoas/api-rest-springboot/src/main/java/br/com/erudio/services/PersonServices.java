@@ -57,7 +57,7 @@ public class PersonServices {
      * variable will be determined by the compiler (type
      * inference), just like TypeScript.
      */
-    var entity = repository.findById(person.getId()).orElseThrow(() ->
+    var entity = repository.findById(person.getKey()).orElseThrow(() ->
         new ResourceNotFoundException("No records found for this ID!")
     );
 

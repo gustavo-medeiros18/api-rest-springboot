@@ -1,12 +1,29 @@
 //DOCS
 package br.com.erudio.data.vo.v1;
 
+import com.github.dozermapper.core.Mapping;
+import org.springframework.hateoas.RepresentationModel;
+
 import java.io.Serializable;
 import java.util.Objects;
 
-
-public class PersonVO implements Serializable {
-  private Long id;
+/**
+ * Our VO needs to extend the RepresentationModel class from the Spring HATEOAS
+ * library. This class is used to add links to a object that will come on
+ * the response, which is a requirement for HATEOAS.
+ */
+public class PersonVO extends RepresentationModel<PersonVO> implements Serializable {
+  /**
+   * This attribute needs to be called 'key' instead of 'id' because the
+   * RepresentationModel class already has an 'id' attribute.
+   * <p>
+   * It's necessary to use the @Mapping annotation to map the "key" attribute
+   * from VO as the "id" attribute from the entity, since it's reccomended to
+   * use same attribute names in the entity and VO classes. But, when this is
+   * not possible, just use the @Mapping annotation to map the attributes.
+   */
+  @Mapping("id")
+  private Long key;
   private String firstName;
   private String lastName;
   private String address;
@@ -20,8 +37,8 @@ public class PersonVO implements Serializable {
     return address;
   }
 
-  public Long getId() {
-    return id;
+  public Long getKey() {
+    return key;
   }
 
   public String getFirstName() {
@@ -52,8 +69,8 @@ public class PersonVO implements Serializable {
     this.firstName = firstName;
   }
 
-  public void setId(Long id) {
-    this.id = id;
+  public void setKey(Long key) {
+    this.key = key;
   }
 
   @Override
@@ -62,7 +79,7 @@ public class PersonVO implements Serializable {
     if (o == null || getClass() != o.getClass()) return false;
 
     PersonVO person = (PersonVO) o;
-    return Objects.equals(id, person.id) &&
+    return Objects.equals(key, person.key) &&
         Objects.equals(firstName, person.firstName) &&
         Objects.equals(lastName, person.lastName) &&
         Objects.equals(address, person.address) &&
@@ -71,6 +88,6 @@ public class PersonVO implements Serializable {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, firstName, lastName, address, gender);
+    return Objects.hash(key, firstName, lastName, address, gender);
   }
 }
