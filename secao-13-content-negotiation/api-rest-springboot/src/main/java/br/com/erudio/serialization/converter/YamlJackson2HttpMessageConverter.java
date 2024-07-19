@@ -8,6 +8,10 @@ import org.springframework.http.converter.json.AbstractJackson2HttpMessageConver
 /**
  * The AbstractJackson2HttpMessageConverter class is an abstract class that needs to
  * be extended to allow the usage of Jackson to convert the response body to YAML.
+ * <p>
+ * This type of conversion class usually is not necessary to convert API data to XML,
+ * for example. But it's useful when we want to convert the response body to other
+ * formats, like YAML.
  */
 public class YamlJackson2HttpMessageConverter extends AbstractJackson2HttpMessageConverter {
   public YamlJackson2HttpMessageConverter() {
