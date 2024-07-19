@@ -58,6 +58,8 @@ public class WebConfig implements WebMvcConfigurer {
         // Associate 'json' parameter value with APPLICATION_JSON media type.
         .mediaType("json", MediaType.APPLICATION_JSON)
         // Associate 'xml' parameter value with APPLICATION_XML media type.
-        .mediaType("xml", MediaType.APPLICATION_XML);
+        .mediaType("xml", MediaType.APPLICATION_XML)
+        // Associate 'x-yaml' parameter value with MEDIA_TYPE_APPLICATION_YML media type.
+        .mediaType("x-yaml", MEDIA_TYPE_APPLICATION_YML);
   }
 }
