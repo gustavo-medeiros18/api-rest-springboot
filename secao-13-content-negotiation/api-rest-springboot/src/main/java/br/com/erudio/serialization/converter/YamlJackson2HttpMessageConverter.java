@@ -10,7 +10,7 @@ import org.springframework.http.converter.json.AbstractJackson2HttpMessageConver
  * be extended to allow the usage of Jackson to convert the response body to YAML.
  */
 public class YamlJackson2HttpMessageConverter extends AbstractJackson2HttpMessageConverter {
-  protected YamlJackson2HttpMessageConverter() {
+  public YamlJackson2HttpMessageConverter() {
     /**
      * The YAMLMapper class can be used to serialize and deserialize YAML content.
      * The setSerializationInclusion method is used to specify which properties of the
