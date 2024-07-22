@@ -1,6 +1,8 @@
 //DOCS
 package br.com.erudio.data.vo.v1;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.github.dozermapper.core.Mapping;
 import org.springframework.hateoas.RepresentationModel;
 
@@ -11,7 +13,12 @@ import java.util.Objects;
  * Our VO needs to extend the RepresentationModel class from the Spring HATEOAS
  * library. This class is used to add links to a object that will come on
  * the response, which is a requirement for HATEOAS.
+ * <p>
+ * The JsonPropertyOrder is also necessary because they key/id attribute will
+ * be processed later, so the 'id' attribute in the response will be the last
+ * if we don't specify the order.
  */
+@JsonPropertyOrder({"id", "firstName", "lastName", "address", "gender"})
 public class PersonVO extends RepresentationModel<PersonVO> implements Serializable {
   /**
    * This attribute needs to be called 'key' instead of 'id' because the
@@ -21,7 +28,11 @@ public class PersonVO extends RepresentationModel<PersonVO> implements Serializa
    * from VO as the "id" attribute from the entity, since it's reccomended to
    * use same attribute names in the entity and VO classes. But, when this is
    * not possible, just use the @Mapping annotation to map the attributes.
+   * <p>
+   * It's also necessary to use the @JsonProperty annotation to make the "key"
+   * attribute be serialized as "id" in the JSON response.
    */
+  @JsonProperty("id")
   @Mapping("id")
   private Long key;
   private String firstName;
