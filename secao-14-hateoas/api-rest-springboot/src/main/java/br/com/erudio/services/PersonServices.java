@@ -34,7 +34,14 @@ public class PersonServices {
       In our application, it's being used to convert the objects
       from entities to VOs and vice-versa.
      */
-    return DozerMapper.parseListObjects(repository.findAll(), PersonVO.class);
+    List<PersonVO> voList = DozerMapper.parseListObjects(repository.findAll(), PersonVO.class);
+    voList.forEach(
+        p -> p.add(linkTo(methodOn(PersonController.class)
+            .findById(p.getKey()))
+            .withSelfRel())
+    );
+
+    return voList;
   }
 
   public PersonVO findById(Long id) {
@@ -67,10 +74,14 @@ public class PersonServices {
 
     var entity = DozerMapper.parseObject(person, Person.class);
 
-    return DozerMapper.parseObject(
+    PersonVO vo = DozerMapper.parseObject(
         repository.save(entity),
         PersonVO.class
     );
+
+    vo.add(linkTo(methodOn(PersonController.class).findById(vo.getKey())).withSelfRel());
+
+    return vo;
   }
 
   public PersonVO update(PersonVO person) {
