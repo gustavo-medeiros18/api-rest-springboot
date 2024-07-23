@@ -112,6 +112,12 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope> <!-- Disponível apenas no escopo de teste -->
         </dependency>
+
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <!-- Configuração de build do projeto -->
