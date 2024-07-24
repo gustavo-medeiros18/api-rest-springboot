@@ -1,5 +1,6 @@
 package br.com.erudio.unittests.mockito.services;
 
+import br.com.erudio.data.vo.v1.PersonVO;
 import br.com.erudio.model.Person;
 import br.com.erudio.repositories.PersonRepository;
 import br.com.erudio.services.PersonServices;
@@ -105,6 +106,43 @@ class PersonServicesTest {
 
   @Test
   void testCreate() {
+    /*
+      Here, we're gonna need an extra Person object (which is the persisted object).
+
+      The entity object is the object that we are going to pass to the repository
+      to simulate the persistence of a new object in the database.
+
+      The persisted object is the object that it's going to be returned when the
+      repository.save() method is called, simulating the object that was persisted
+      in the database, and that was returned by repository.save().
+     */
+    Person entity = input.mockEntity(1);
+    Person persisted = entity;
+
+    /*
+      Id needs to be set manually because the mockEntity method
+      does not set the id field. And, since we want to simulate
+      an persisted object, we need to set its id field.
+     */
+    persisted.setId(1L);
+
+    PersonVO vo = input.mockVO(1);
+    vo.setKey(1L);
+
+    when(repository.save(entity)).thenReturn(persisted);
+
+    var result = services.create(vo);
+
+    assertNotNull(result);
+    assertNotNull(result.getKey());
+    assertNotNull(result.getLinks());
+
+    assertTrue(result.toString().contains("links: [</api/person/v1/1>;rel=\"self\"]"));
+
+    assertEquals("Addres Test1", result.getAddress());
+    assertEquals("First Name Test1", result.getFirstName());
+    assertEquals("Last Name Test1", result.getLastName());
+    assertEquals("Female", result.getGender());
   }
 
   @Test
