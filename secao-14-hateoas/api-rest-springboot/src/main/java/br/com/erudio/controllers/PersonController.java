@@ -135,6 +135,38 @@ public class PersonController {
           MediaType.APPLICATION_YML
       }
   )
+  @Operation(
+      summary = "Records a person in the database",
+      description = "Records a person in the database",
+      tags = {"People"},
+      responses = {
+          @ApiResponse(
+              description = "Person created",
+              responseCode = "201",
+              content = {
+                  @Content(
+                      mediaType = MediaType.APLLICATION_JSON,
+                      schema = @Schema(implementation = PersonVO.class)
+                  )
+              }
+          ),
+          @ApiResponse(
+              description = "Bad request",
+              responseCode = "400",
+              content = @Content
+          ),
+          @ApiResponse(
+              description = "Unauthorized",
+              responseCode = "401",
+              content = @Content
+          ),
+          @ApiResponse(
+              description = "Internal server error",
+              responseCode = "500",
+              content = @Content
+          ),
+      }
+  )
   public PersonVO createPerson(
       @RequestBody PersonVO person
   ) {
