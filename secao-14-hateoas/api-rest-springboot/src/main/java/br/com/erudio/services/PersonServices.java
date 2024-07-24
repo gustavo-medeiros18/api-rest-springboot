@@ -102,10 +102,13 @@ public class PersonServices {
     entity.setAddress(person.getAddress());
     entity.setGender(person.getGender());
 
-    return DozerMapper.parseObject(
+    PersonVO vo = DozerMapper.parseObject(
         repository.save(entity),
         PersonVO.class
     );
+    vo.add(linkTo(methodOn(PersonController.class).findById(vo.getKey())).withSelfRel());
+
+    return vo;
   }
 
   public void delete(Long id) {
