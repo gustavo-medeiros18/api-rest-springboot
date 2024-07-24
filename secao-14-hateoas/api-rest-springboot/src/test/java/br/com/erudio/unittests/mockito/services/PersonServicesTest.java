@@ -73,12 +73,12 @@ class PersonServicesTest {
 
   @Test
   void testFindById() {
-    Person person = input.mockEntity(1);
+    Person entity = input.mockEntity(1);
     /*
       Id needs to be set manually because the mockEntity method
       does not set the id field.
      */
-    person.setId(1L);
+    entity.setId(1L);
 
     /*
       The when() method is used to configure the behavior of the mock object.
@@ -87,7 +87,7 @@ class PersonServicesTest {
       object when the findById method is called, instead of actually accessing
       the database.
      */
-    when(repository.findById(1L)).thenReturn(Optional.of(person));
+    when(repository.findById(1L)).thenReturn(Optional.of(entity));
 
     var result = services.findById(1L);
 
