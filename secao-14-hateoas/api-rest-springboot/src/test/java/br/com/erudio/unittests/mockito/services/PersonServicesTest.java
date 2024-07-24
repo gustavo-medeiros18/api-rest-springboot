@@ -156,6 +156,12 @@ class PersonServicesTest {
     PersonVO vo = input.mockVO(1);
     vo.setKey(1L);
 
+    /*
+      Here, it's necessary to mock both findById and save methods from
+      the repository, because the PersonServices.update() function uses
+      these two methods to first search for the existing object, and the
+      for saving the updated object.
+     */
     when(repository.findById(1L)).thenReturn(Optional.of(entity));
     when(repository.save(entity)).thenReturn(persisted);
 
@@ -175,5 +181,11 @@ class PersonServicesTest {
 
   @Test
   void testDelete() {
+    Person entity = input.mockEntity(1);
+    entity.setId(1L);
+
+    when(repository.findById(1L)).thenReturn(Optional.of(entity));
+
+    services.delete(1L);
   }
 }
