@@ -231,6 +231,38 @@ public class PersonController {
   @DeleteMapping(
       value = "/{id}"
   )
+  @Operation(
+      summary = "Deletes a person in the database",
+      description = "Delete a person in the database",
+      tags = {"People"},
+      responses = {
+          @ApiResponse(
+              description = "No content",
+              responseCode = "204",
+              content = @Content
+          ),
+          @ApiResponse(
+              description = "Bad request",
+              responseCode = "400",
+              content = @Content
+          ),
+          @ApiResponse(
+              description = "Unauthorized",
+              responseCode = "401",
+              content = @Content
+          ),
+          @ApiResponse(
+              description = "Not found",
+              responseCode = "404",
+              content = @Content
+          ),
+          @ApiResponse(
+              description = "Internal server error",
+              responseCode = "500",
+              content = @Content
+          ),
+      }
+  )
   public ResponseEntity<Void> delete(
       @PathVariable(value = "id") Long id
   ) {
