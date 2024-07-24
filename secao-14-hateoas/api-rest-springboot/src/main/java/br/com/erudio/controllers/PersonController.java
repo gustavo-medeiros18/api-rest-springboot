@@ -22,8 +22,6 @@ public class PersonController {
   @Autowired
   private PersonServices service;
 
-  private static final String YAML_MEDIA_TYPE = "application/x-yaml";
-
   @GetMapping(
       value = "/{id}",
       produces = {
