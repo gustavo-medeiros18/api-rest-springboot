@@ -22,4 +22,10 @@ public class BookServices {
 
     return repository.findAll();
   }
+
+  public Book findById(Long id) {
+    logger.info("Finding book by id: " + id);
+
+    return repository.findById(id).orElse(null);
+  }
 }
