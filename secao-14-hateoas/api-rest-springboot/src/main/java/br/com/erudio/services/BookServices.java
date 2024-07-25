@@ -34,4 +34,11 @@ public class BookServices {
 
     return repository.save(book);
   }
+
+  public void delete(Long id) {
+    logger.info("Deleting book by id: " + id);
+
+    var entity = repository.findById(id).orElse(null);
+    if (entity != null) repository.delete(entity);
+  }
 }

@@ -40,4 +40,9 @@ public class BookController {
   public Book create(@RequestBody Book book) {
     return service.create(book);
   }
+
+  @DeleteMapping("/{id}")
+  public void delete(@PathVariable(value = "id") Long id) {
+    service.delete(id);
+  }
 }
