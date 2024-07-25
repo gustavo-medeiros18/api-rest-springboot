@@ -35,6 +35,22 @@ public class BookServices {
     return repository.save(book);
   }
 
+  public Book update(Book book) {
+    logger.info("Updating book!");
+
+    var entity = repository.findById(book.getId()).orElse(null);
+    if (entity != null) {
+      entity.setAuthor(book.getAuthor());
+      entity.setLaunchDate(book.getLaunchDate());
+      entity.setPrice(book.getPrice());
+      entity.setTitle(book.getTitle());
+
+      return repository.save(entity);
+    }
+
+    return null;
+  }
+
   public void delete(Long id) {
     logger.info("Deleting book by id: " + id);
 

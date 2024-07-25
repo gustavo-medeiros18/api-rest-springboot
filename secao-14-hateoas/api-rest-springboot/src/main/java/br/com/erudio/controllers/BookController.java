@@ -41,6 +41,14 @@ public class BookController {
     return service.create(book);
   }
 
+  @PutMapping(
+      produces = MediaType.APLLICATION_JSON,
+      consumes = MediaType.APLLICATION_JSON
+  )
+  public Book update(@RequestBody Book book) {
+    return service.update(book);
+  }
+
   @DeleteMapping("/{id}")
   public void delete(@PathVariable(value = "id") Long id) {
     service.delete(id);
