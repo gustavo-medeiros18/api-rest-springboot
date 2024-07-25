@@ -46,7 +46,7 @@ public class BookController {
       produces = MediaType.APLLICATION_JSON,
       consumes = MediaType.APLLICATION_JSON
   )
-  public Book update(@RequestBody Book book) {
+  public BookVO update(@RequestBody BookVO book) {
     return service.update(book);
   }
 

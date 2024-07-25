@@ -57,17 +57,20 @@ public class BookServices {
     return vo;
   }
 
-  public Book update(Book book) {
+  public BookVO update(BookVO book) {
     logger.info("Updating book!");
 
-    var entity = repository.findById(book.getId()).orElse(null);
+    var entity = repository.findById(book.getKey()).orElse(null);
     if (entity != null) {
       entity.setAuthor(book.getAuthor());
       entity.setLaunchDate(book.getLaunchDate());
       entity.setPrice(book.getPrice());
       entity.setTitle(book.getTitle());
 
-      return repository.save(entity);
+      BookVO vo = DozerMapper.parseObject(repository.save(entity), BookVO.class);
+      vo.add(linkTo(methodOn(BookController.class).findById(vo.getKey())).withSelfRel());
+
+      return vo;
     }
 
     return null;
