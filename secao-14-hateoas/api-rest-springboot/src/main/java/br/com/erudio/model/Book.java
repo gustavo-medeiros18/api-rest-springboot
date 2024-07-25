@@ -17,7 +17,7 @@ public class Book {
   @Column(name = "launch_date", nullable = false)
   private String launchDate;
 
-  @Column(precision = 65, scale = 2, nullable = false)
+  @Column(precision = 65, nullable = false)
   private Double price;
 
   @Column
