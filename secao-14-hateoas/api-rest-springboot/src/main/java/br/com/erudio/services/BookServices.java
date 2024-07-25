@@ -1,5 +1,8 @@
 package br.com.erudio.services;
 
+import br.com.erudio.controllers.BookController;
+import br.com.erudio.data.vo.v1.BookVO;
+import br.com.erudio.mapper.DozerMapper;
 import br.com.erudio.model.Book;
 import br.com.erudio.repositories.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +10,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.logging.Logger;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Service
 public class BookServices {
@@ -17,10 +23,17 @@ public class BookServices {
   @Autowired
   private BookRepository repository;
 
-  public List<Book> findAll() {
+  public List<BookVO> findAll() {
     logger.info("Finding all books!");
 
-    return repository.findAll();
+    List<BookVO> voList = DozerMapper.parseListObjects(repository.findAll(), BookVO.class);
+    voList.forEach(
+        p -> p.add(linkTo(methodOn(BookController.class)
+            .findById(p.getKey()))
+            .withSelfRel())
+    );
+
+    return voList;
   }
 
   public Book findById(Long id) {
