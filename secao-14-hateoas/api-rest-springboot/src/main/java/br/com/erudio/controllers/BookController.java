@@ -1,5 +1,6 @@
 package br.com.erudio.controllers;
 
+import br.com.erudio.data.vo.v1.BookVO;
 import br.com.erudio.model.Book;
 import br.com.erudio.services.BookServices;
 import br.com.erudio.util.MediaType;
@@ -29,7 +30,7 @@ public class BookController {
   @GetMapping(
       produces = MediaType.APLLICATION_JSON
   )
-  public List<Book> findAll() {
+  public List<BookVO> findAll() {
     return service.findAll();
   }
 
