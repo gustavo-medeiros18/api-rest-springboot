@@ -1,7 +1,6 @@
 package br.com.erudio.controllers;
 
 import br.com.erudio.data.vo.v1.BookVO;
-import br.com.erudio.model.Book;
 import br.com.erudio.services.BookServices;
 import br.com.erudio.util.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,23 +27,43 @@ public class BookController {
   }
 
   @GetMapping(
-      produces = MediaType.APLLICATION_JSON
+      produces = {
+          MediaType.APLLICATION_JSON,
+          MediaType.APLLICATION_XML,
+          MediaType.APPLICATION_YML
+      }
   )
   public List<BookVO> findAll() {
     return service.findAll();
   }
 
   @PostMapping(
-      produces = MediaType.APLLICATION_JSON,
-      consumes = MediaType.APLLICATION_JSON
+      consumes = {
+          MediaType.APLLICATION_JSON,
+          MediaType.APLLICATION_XML,
+          MediaType.APPLICATION_YML
+      },
+      produces = {
+          MediaType.APLLICATION_JSON,
+          MediaType.APLLICATION_XML,
+          MediaType.APPLICATION_YML
+      }
   )
   public BookVO create(@RequestBody BookVO book) {
     return service.create(book);
   }
 
   @PutMapping(
-      produces = MediaType.APLLICATION_JSON,
-      consumes = MediaType.APLLICATION_JSON
+      consumes = {
+          MediaType.APLLICATION_JSON,
+          MediaType.APLLICATION_XML,
+          MediaType.APPLICATION_YML
+      },
+      produces = {
+          MediaType.APLLICATION_JSON,
+          MediaType.APLLICATION_XML,
+          MediaType.APPLICATION_YML
+      }
   )
   public BookVO update(@RequestBody BookVO book) {
     return service.update(book);
