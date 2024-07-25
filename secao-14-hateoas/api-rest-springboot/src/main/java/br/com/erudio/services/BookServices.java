@@ -28,4 +28,10 @@ public class BookServices {
 
     return repository.findById(id).orElse(null);
   }
+
+  public Book create(Book book) {
+    logger.info("Creating book!");
+
+    return repository.save(book);
+  }
 }

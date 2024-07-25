@@ -4,10 +4,7 @@ import br.com.erudio.model.Book;
 import br.com.erudio.services.BookServices;
 import br.com.erudio.util.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -34,5 +31,13 @@ public class BookController {
   )
   public List<Book> findAll() {
     return service.findAll();
+  }
+
+  @PostMapping(
+      produces = MediaType.APLLICATION_JSON,
+      consumes = MediaType.APLLICATION_JSON
+  )
+  public Book create(@RequestBody Book book) {
+    return service.create(book);
   }
 }
