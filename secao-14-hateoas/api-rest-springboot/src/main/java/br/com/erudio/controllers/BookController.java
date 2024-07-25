@@ -38,7 +38,7 @@ public class BookController {
       produces = MediaType.APLLICATION_JSON,
       consumes = MediaType.APLLICATION_JSON
   )
-  public Book create(@RequestBody Book book) {
+  public BookVO create(@RequestBody BookVO book) {
     return service.create(book);
   }
 

@@ -47,10 +47,14 @@ public class BookServices {
     return vo;
   }
 
-  public Book create(Book book) {
+  public BookVO create(BookVO book) {
     logger.info("Creating book!");
 
-    return repository.save(book);
+    var entity = DozerMapper.parseObject(book, Book.class);
+    BookVO vo = DozerMapper.parseObject(repository.save(entity), BookVO.class);
+
+    vo.add(linkTo(methodOn(BookController.class).findById(vo.getKey())).withSelfRel());
+    return vo;
   }
 
   public Book update(Book book) {
