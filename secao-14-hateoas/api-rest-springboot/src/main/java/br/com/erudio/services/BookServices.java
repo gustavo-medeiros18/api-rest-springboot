@@ -36,10 +36,15 @@ public class BookServices {
     return voList;
   }
 
-  public Book findById(Long id) {
+  public BookVO findById(Long id) {
     logger.info("Finding book by id: " + id);
 
-    return repository.findById(id).orElse(null);
+    var entity = repository.findById(id).orElse(null);
+
+    BookVO vo = DozerMapper.parseObject(entity, BookVO.class);
+    vo.add(linkTo(methodOn(BookController.class).findById(id)).withSelfRel());
+
+    return vo;
   }
 
   public Book create(Book book) {

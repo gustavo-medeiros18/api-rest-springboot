@@ -23,7 +23,7 @@ public class BookController {
           MediaType.APPLICATION_YML
       }
   )
-  public Book findById(@PathVariable(value = "id") Long id) {
+  public BookVO findById(@PathVariable(value = "id") Long id) {
     return service.findById(id);
   }
 
