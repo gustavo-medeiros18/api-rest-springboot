@@ -2,6 +2,8 @@ package br.com.erudio.services;
 
 import br.com.erudio.controllers.BookController;
 import br.com.erudio.data.vo.v1.BookVO;
+import br.com.erudio.exceptions.RequiredObjectIsNullException;
+import br.com.erudio.exceptions.ResourceNotFoundException;
 import br.com.erudio.mapper.DozerMapper;
 import br.com.erudio.model.Book;
 import br.com.erudio.repositories.BookRepository;
@@ -39,7 +41,9 @@ public class BookServices {
   public BookVO findById(Long id) {
     logger.info("Finding book by id: " + id);
 
-    var entity = repository.findById(id).orElse(null);
+    var entity = repository.findById(id).orElseThrow(() ->
+        new ResourceNotFoundException("No records found for this ID!")
+    );
 
     BookVO vo = DozerMapper.parseObject(entity, BookVO.class);
     vo.add(linkTo(methodOn(BookController.class).findById(id)).withSelfRel());
@@ -48,6 +52,9 @@ public class BookServices {
   }
 
   public BookVO create(BookVO book) {
+    if (book == null)
+      throw new RequiredObjectIsNullException();
+
     logger.info("Creating book!");
 
     var entity = DozerMapper.parseObject(book, Book.class);
@@ -58,9 +65,15 @@ public class BookServices {
   }
 
   public BookVO update(BookVO book) {
+    if (book == null)
+      throw new RequiredObjectIsNullException();
+
     logger.info("Updating book!");
 
-    var entity = repository.findById(book.getKey()).orElse(null);
+    var entity = repository.findById(book.getKey()).orElseThrow(() ->
+        new ResourceNotFoundException("No records found for this ID!")
+    );
+
     if (entity != null) {
       entity.setAuthor(book.getAuthor());
       entity.setLaunchDate(book.getLaunchDate());
@@ -79,7 +92,9 @@ public class BookServices {
   public void delete(Long id) {
     logger.info("Deleting book by id: " + id);
 
-    var entity = repository.findById(id).orElse(null);
+    var entity = repository.findById(id).orElseThrow(() ->
+        new ResourceNotFoundException("No records found for this ID!")
+    );
     if (entity != null) repository.delete(entity);
   }
 }
