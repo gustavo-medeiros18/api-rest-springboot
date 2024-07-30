@@ -55,4 +55,13 @@ public class BookServicesTest {
     assertEquals(Double.valueOf(11), result.getPrice());
     assertEquals("Title Test1", result.getTitle());
   }
+
+  @Test
+  void testDelete() {
+    Book entity = input.mockEntity(1);
+    entity.setId(1L);
+
+    when(repository.findById(1L)).thenReturn(Optional.of(entity));
+    services.delete(1L);
+  }
 }
