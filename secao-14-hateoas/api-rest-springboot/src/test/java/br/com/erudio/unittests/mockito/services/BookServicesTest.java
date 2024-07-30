@@ -1,5 +1,6 @@
 package br.com.erudio.unittests.mockito.services;
 
+import br.com.erudio.exceptions.ResourceNotFoundException;
 import br.com.erudio.model.Book;
 import br.com.erudio.repositories.BookRepository;
 import br.com.erudio.services.BookServices;
@@ -15,8 +16,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -63,5 +63,19 @@ public class BookServicesTest {
 
     when(repository.findById(1L)).thenReturn(Optional.of(entity));
     services.delete(1L);
+  }
+
+  @Test
+  void testDeleteWithUnknownId() {
+    when(repository.findById(1L)).thenReturn(Optional.empty());
+
+    Exception exception = assertThrows(ResourceNotFoundException.class, () -> {
+      services.delete(1L);
+    });
+
+    String expectedMessage = "No records found for this ID!";
+    String actualMessage = exception.getMessage();
+
+    assertTrue(actualMessage.contains(expectedMessage));
   }
 }
