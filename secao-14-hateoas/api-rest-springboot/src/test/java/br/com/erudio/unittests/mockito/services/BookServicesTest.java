@@ -1,6 +1,7 @@
 package br.com.erudio.unittests.mockito.services;
 
 import br.com.erudio.data.vo.v1.BookVO;
+import br.com.erudio.exceptions.RequiredObjectIsNullException;
 import br.com.erudio.exceptions.ResourceNotFoundException;
 import br.com.erudio.model.Book;
 import br.com.erudio.repositories.BookRepository;
@@ -131,6 +132,18 @@ public class BookServicesTest {
     assertEquals("2020-01-01", result.getLaunchDate());
     assertEquals(Double.valueOf(11), result.getPrice());
     assertEquals("Title Test1", result.getTitle());
+  }
+
+  @Test
+  void testCreateWithNullBook() {
+    Exception exception = assertThrows(RequiredObjectIsNullException.class, () -> {
+      services.create(null);
+    });
+
+    String expectedMessage = "It is not allowed to persist a null object!";
+    String actualMessage = exception.getMessage();
+
+    assertTrue(actualMessage.contains(expectedMessage));
   }
 
   @Test
