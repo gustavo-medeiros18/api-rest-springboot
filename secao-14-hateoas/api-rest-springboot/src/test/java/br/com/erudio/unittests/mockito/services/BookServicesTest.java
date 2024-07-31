@@ -1,5 +1,6 @@
 package br.com.erudio.unittests.mockito.services;
 
+import br.com.erudio.data.vo.v1.BookVO;
 import br.com.erudio.exceptions.ResourceNotFoundException;
 import br.com.erudio.model.Book;
 import br.com.erudio.repositories.BookRepository;
@@ -101,6 +102,31 @@ public class BookServicesTest {
     assertNotNull(result.getLinks());
 
     assertEquals(Long.valueOf(1L), result.getKey());
+    assertEquals("Author Test1", result.getAuthor());
+    assertEquals("2020-01-01", result.getLaunchDate());
+    assertEquals(Double.valueOf(11), result.getPrice());
+    assertEquals("Title Test1", result.getTitle());
+  }
+
+  @Test
+  void testCreate() {
+    Book entity = input.mockEntity(1);
+    Book persisted = entity;
+
+    persisted.setId(1L);
+
+    BookVO vo = input.mockVO(1);
+    vo.setKey(1L);
+
+    when(repository.save(entity)).thenReturn(persisted);
+    var result = services.create(vo);
+
+    assertNotNull(result);
+    assertNotNull(result.getKey());
+    assertNotNull(result.getLinks());
+
+    assertTrue(result.toString().contains("links: [</api/book/v1/1>;rel=\"self\"]"));
+
     assertEquals("Author Test1", result.getAuthor());
     assertEquals("2020-01-01", result.getLaunchDate());
     assertEquals(Double.valueOf(11), result.getPrice());
