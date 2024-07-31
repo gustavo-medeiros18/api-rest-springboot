@@ -187,6 +187,21 @@ public class BookServicesTest {
   }
 
   @Test
+  void testUpdateWithUnknownId() {
+    BookVO vo = input.mockVO(1);
+
+    when(repository.findById(1L)).thenReturn(Optional.empty());
+    Exception exception = assertThrows(ResourceNotFoundException.class, () -> {
+      services.update(vo);
+    });
+
+    String expectedMessage = "No records found for this ID!";
+    String actualMessage = exception.getMessage();
+
+    assertTrue(actualMessage.contains(expectedMessage));
+  }
+
+  @Test
   void testDelete() {
     Book entity = input.mockEntity(1);
     entity.setId(1L);
