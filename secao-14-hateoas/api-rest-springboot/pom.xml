@@ -47,6 +47,8 @@
         <java.version>21</java.version> <!-- Versão do Java utilizada -->
         <dozer.version>6.4.0</dozer.version> <!-- Versão do Dozer utilizada -->
         <springdoc.version>2.0.2</springdoc.version> <!-- Versão do Springdoc OpenAPI utilizada -->
+        <testcontainers.version>1.16.3</testcontainers.version> <!-- Versão do Testcontainers utilizada -->
+        <rest-assured.version>4.5.0</rest-assured.version> <!-- Versão do Testcontainers utilizada -->
     </properties>
 
     <!-- Dependências do projeto -->
@@ -117,6 +119,20 @@
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <version>${rest-assured.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>mysql</artifactId>
+            <version>${testcontainers.version}</version>
             <scope>test</scope>
         </dependency>
 
