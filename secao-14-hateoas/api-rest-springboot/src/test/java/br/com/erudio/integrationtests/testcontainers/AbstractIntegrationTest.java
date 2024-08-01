@@ -23,7 +23,7 @@ import java.util.stream.Stream;
  */
 @ContextConfiguration(initializers = AbstractIntegrationTest.Initializer.class)
 public class AbstractIntegrationTest {
-  public class Initializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
+  public static class Initializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
     static MySQLContainer<?> mysql = new MySQLContainer<>("mysql:8.0.29")
         .withDatabaseName("integration-tests-db")
         .withUsername("sa")
