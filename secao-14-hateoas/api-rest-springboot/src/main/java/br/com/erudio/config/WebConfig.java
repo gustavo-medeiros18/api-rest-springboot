@@ -1,10 +1,12 @@
 package br.com.erudio.config;
 
 import br.com.erudio.serialization.converter.YamlJackson2HttpMessageConverter;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.List;
@@ -25,6 +27,20 @@ public class WebConfig implements WebMvcConfigurer {
       MediaType.valueOf("application/x-yaml");
 
   /**
+   * The Value annotation is used to inject the value of the specified
+   * property into a specific field. In this case, we are injecting the
+   * value of the 'cors.originPatterns' property into the corsOriginPatterns
+   * field.
+   * <p>
+   * Here, the injected value is a comma-separated list of allowed origins for
+   * CORS requests. If the property is not set, the default value is used.
+   * <p>
+   * The injected value comes from the application.properties file.
+   */
+  @Value("${cors.originPatterns: default}")
+  private String corsOriginPatterns = "";
+
+  /**
    * The extendMessageConverters method is used to add a new message converter
    * to the list of converters.
    * <p>
@@ -34,6 +50,24 @@ public class WebConfig implements WebMvcConfigurer {
   @Override
   public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
     converters.add(new YamlJackson2HttpMessageConverter());
+  }
+
+  /**
+   * The addCorsMappings method is used to configure the CORS (Cross-Origin
+   * Resource Sharing) policy in the application.
+   * <p>
+   * Here, we are allowing requests from the origins specified in the
+   * corsOriginPatterns field. We are also allowing all HTTP methods and
+   * credentials to be sent with the request.
+   */
+  @Override
+  public void addCorsMappings(CorsRegistry registry) {
+    var allowedOrigins = corsOriginPatterns.split(",");
+
+    registry.addMapping("/**")
+        .allowedMethods("*")
+        .allowedOrigins(allowedOrigins)
+        .allowCredentials(true);
   }
 
   /**
