@@ -94,7 +94,7 @@ public class PersonControllerJsonTest extends AbstractIntegrationTest {
      * in the subsequent HTTP requests to ensure consistent settings.
      */
     specification = new RequestSpecBuilder()
-        .addHeader(TestConfigs.HEADER_PARAM_ORIGIN, "https://erudio.com.br")
+        .addHeader(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_ERUDIO)
         .setBasePath("/api/person/v1")
         .setPort(TestConfigs.SERVER_PORT)
         .addFilter(new RequestLoggingFilter(LogDetail.ALL))
