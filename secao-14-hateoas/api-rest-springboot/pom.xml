@@ -49,6 +49,7 @@
         <springdoc.version>2.0.2</springdoc.version> <!-- Versão do Springdoc OpenAPI utilizada -->
         <testcontainers.version>1.16.3</testcontainers.version> <!-- Versão do Testcontainers utilizada -->
         <rest-assured.version>4.5.0</rest-assured.version> <!-- Versão do Testcontainers utilizada -->
+        <java-jwt.version>3.18.3</java-jwt.version>
     </properties>
 
     <!-- Dependências do projeto -->
@@ -62,6 +63,11 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
 
         <dependency>
