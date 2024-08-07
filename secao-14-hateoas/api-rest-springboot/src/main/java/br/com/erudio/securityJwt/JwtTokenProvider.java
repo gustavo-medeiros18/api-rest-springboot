@@ -6,6 +6,7 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import jakarta.annotation.PostConstruct;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -119,5 +120,14 @@ public class JwtTokenProvider {
 
     DecodedJWT decodedJWT = verifier.verify(token);
     return decodedJWT;
+  }
+
+  public String resolveToken(HttpServletRequest request) {
+    String bearerToken = request.getHeader("Authorization");
+
+    if (bearerToken != null && bearerToken.startsWith("Bearer "))
+      return bearerToken.substring(7);
+
+    return null;
   }
 }
