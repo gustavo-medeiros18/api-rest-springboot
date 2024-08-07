@@ -53,7 +53,7 @@ public class JwtTokenProvider {
   @PostConstruct
   protected void init() {
     secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
-    algorithm = Algorithm.HMAC256(secretKey);
+    algorithm = Algorithm.HMAC256(secretKey.getBytes());
   }
 
   public TokenVO createAccessToken(String username, List<String> roles) {
