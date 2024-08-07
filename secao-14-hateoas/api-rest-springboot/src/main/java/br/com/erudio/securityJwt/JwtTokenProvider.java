@@ -1,6 +1,7 @@
 package br.com.erudio.securityJwt;
 
 import br.com.erudio.data.vo.v1.security.TokenVO;
+import br.com.erudio.exceptions.InvalidJwtAuthenticationException;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -129,5 +130,17 @@ public class JwtTokenProvider {
       return bearerToken.substring(7);
 
     return null;
+  }
+
+  public boolean validateToken(String token) throws InvalidJwtAuthenticationException {
+    DecodedJWT decodedJWT = decodeToken(token);
+
+    try {
+      if (decodedJWT.getExpiresAt().before(new Date()))
+        return false;
+      return true;
+    } catch (Exception e) {
+      throw new InvalidJwtAuthenticationException("Expired or invalid token");
+    }
   }
 }
