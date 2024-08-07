@@ -1,12 +1,14 @@
 package br.com.erudio.securityJwt;
 
 import br.com.erudio.data.vo.v1.security.TokenVO;
+import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.Base64;
 import java.util.Date;
@@ -61,16 +63,36 @@ public class JwtTokenProvider {
     Date validity = new Date(now.getTime() + validityInMilliseconds);
 
     var accessToken = getAccessToken(username, roles, now, validity);
-    var refreshToken = getAccessToken(username, roles, now);
+    var refreshToken = getRefreshToken(username, roles, now);
 
     return new TokenVO(username, true, now, validity, accessToken, refreshToken);
   }
 
-  private String getAccessToken(String username, List<String> roles, Date now) {
-    return "";
+  private String getAccessToken(String username, List<String> roles, Date now, Date vality) {
+    String issueUrl = ServletUriComponentsBuilder
+        .fromCurrentContextPath()
+        .build()
+        .toUriString();
+
+    return JWT.create()
+        .withClaim("roles", roles)
+        .withIssuedAt(now)
+        .withExpiresAt(vality)
+        .withSubject(username)
+        .withIssuer(issueUrl)
+        .sign(algorithm)
+        .strip();
   }
 
-  private String getAccessToken(String username, List<String> roles, Date now, Date vality) {
-    return "";
+  private String getRefreshToken(String username, List<String> roles, Date now) {
+    Date validityRefreshToken = new Date(now.getTime() + (validityInMilliseconds * 3));
+
+    return JWT.create()
+        .withClaim("roles", roles)
+        .withIssuedAt(now)
+        .withExpiresAt(validityRefreshToken)
+        .withSubject(username)
+        .sign(algorithm)
+        .strip();
   }
 }
