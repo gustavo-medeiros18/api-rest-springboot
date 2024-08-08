@@ -75,6 +75,18 @@ public class JwtTokenProvider {
     return new TokenVO(username, true, now, validity, accessToken, refreshToken);
   }
 
+  /**
+   * The `getAccessToken` method creates a JWT access token based on the provided username,
+   * roles, current date, and expiration date. It includes the following information in the token:
+   * <p>
+   * 1. `roles`: The user's roles.<br>
+   * 2. `issuedAt`: The date and time the token was issued.<br>
+   * 3. `expiresAt`: The date and time the token expires.<br>
+   * 4. `subject`: The username.<br>
+   * 5. `issuer`: The token issuer's URL.
+   * <p>
+   * The token is signed using the HMAC256 algorithm and the encoded secret key.
+   */
   private String getAccessToken(String username, List<String> roles, Date now, Date vality) {
     String issueUrl = ServletUriComponentsBuilder
         .fromCurrentContextPath()
@@ -91,7 +103,19 @@ public class JwtTokenProvider {
         .strip();
   }
 
+  /**
+   * The `getRefreshToken` method creates a JWT refresh token based on the provided username,
+   * roles, and current date. It includes the following information in the token:
+   * <p>
+   * 1. `roles`: The user's roles.<br>
+   * 2. `issuedAt`: The date and time the token was issued.<br>
+   * 3. `expiresAt`: The date and time the token expires (three times the access token's validity period).<br>
+   * 4. `subject`: The username.
+   * <p>
+   * The token is signed using the HMAC256 algorithm and the encoded secret key.
+   */
   private String getRefreshToken(String username, List<String> roles, Date now) {
+    // The refresh token is valid for 3 hours.
     Date validityRefreshToken = new Date(now.getTime() + (validityInMilliseconds * 3));
 
     return JWT.create()
@@ -103,6 +127,11 @@ public class JwtTokenProvider {
         .strip();
   }
 
+  /**
+   * The `getAuthentication` method decodes the provided JWT token and loads the user details
+   * based on the username contained in the token. It returns an `Authentication` object that
+   * contains the user details and their authorities.
+   */
   public Authentication getAuthentication(String token) {
     DecodedJWT decodedJWT = decodeToken(token);
     UserDetails userDetails = userDetailsService
@@ -115,6 +144,11 @@ public class JwtTokenProvider {
     );
   }
 
+  /**
+   * The `decodeToken` method decodes the provided JWT token using the HMAC256 algorithm
+   * and the encoded secret key. It returns a `DecodedJWT` object that contains the
+   * decoded information from the token.
+   */
   private DecodedJWT decodeToken(String token) {
     Algorithm alg = Algorithm.HMAC256(secretKey.getBytes());
     JWTVerifier verifier = JWT.require(alg).build();
@@ -123,6 +157,11 @@ public class JwtTokenProvider {
     return decodedJWT;
   }
 
+  /**
+   * The `resolveToken` method extracts the JWT token from the HTTP request's authorization header.
+   * If the header starts with "Bearer ", it returns the token without the "Bearer " prefix.
+   * Otherwise, it returns null.
+   */
   public String resolveToken(HttpServletRequest request) {
     String bearerToken = request.getHeader("Authorization");
 
@@ -132,6 +171,11 @@ public class JwtTokenProvider {
     return null;
   }
 
+  /**
+   * The `validateToken` method validates the provided JWT token. It decodes the token and checks
+   * if the expiration date is before the current date. If the token is expired or invalid,
+   * it throws an `InvalidJwtAuthenticationException`.
+   */
   public boolean validateToken(String token) throws InvalidJwtAuthenticationException {
     DecodedJWT decodedJWT = decodeToken(token);
 
