@@ -21,6 +21,9 @@ import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * The `JwtTokenProvider` class is responsible for creating, validating, and decoding JWT tokens.
+ */
 @Service
 public class JwtTokenProvider {
   /**
