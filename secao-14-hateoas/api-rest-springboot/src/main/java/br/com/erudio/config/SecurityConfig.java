@@ -20,16 +20,36 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import java.util.Map;
 
-// TODO: Add descriptive comments in this class.
+/**
+ * The @EnableWebSecurity annotation enables Spring Security's web security support
+ * and provides the Spring MVC integration. It allows customization of web security
+ * by extending WebSecurityConfigurerAdapter and overriding its methods.
+ */
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig {
   @Autowired
   private JwtTokenProvider tokenProvider;
 
+  /**
+   * The PasswordEncoder method defines a bean that provides password encoding
+   * functionality. It is used to encode passwords for storage and to verify
+   * encoded passwords during authentication.
+   */
   @Bean
   PasswordEncoder passwordEncoder() {
+    /**
+     * The encoders map holds different types of password encoders. It is instantiated
+     * as a hash map to provide efficient storage and retrieval of encoders by their
+     * names (keys).
+     */
     Map<String, PasswordEncoder> encoders = new HashedMap();
+
+    /**
+     * The pbkdf2Encoder object is an instance of Pbkdf2PasswordEncoder, which uses
+     * the PBKDF2 algorithm with HMAC-SHA256 for password hashing. It is used to
+     * encode passwords with a high level of security.
+     */
     Pbkdf2PasswordEncoder pbkdf2Encoder = new Pbkdf2PasswordEncoder(
         "",
         8,
@@ -38,14 +58,29 @@ public class SecurityConfig {
     );
     encoders.put("pbkdf2", pbkdf2Encoder);
 
+    /**
+     * The passwordEncoder object is an instance of DelegatingPasswordEncoder, which
+     * delegates password encoding to one of the encoders in the encoders map based
+     * on a prefix in the encoded password. It allows for multiple encoding strategies.
+     */
     DelegatingPasswordEncoder passwordEncoder =
         new DelegatingPasswordEncoder("pbkdf2", encoders);
 
+    /**
+     * The setDefaultPasswordEncoderForMatches method sets the default password encoder
+     * to be used when no prefix is found in the encoded password. In this case, the
+     * pbkdf2Encoder object is passed as an argument to ensure PBKDF2 is used by default.
+     */
     passwordEncoder.setDefaultPasswordEncoderForMatches(pbkdf2Encoder);
 
     return passwordEncoder;
   }
 
+  /**
+   * The authenticationManagerBean method defines a bean that provides an
+   * AuthenticationManager instance. It is used to handle authentication requests
+   * and to manage the authentication process.
+   */
   @Bean
   AuthenticationManager authenticationManagerBean(
       AuthenticationConfiguration authenticationConfiguration
@@ -53,10 +88,24 @@ public class SecurityConfig {
     return authenticationConfiguration.getAuthenticationManager();
   }
 
+  /**
+   * The securityFilterChain method defines a bean that configures the security filter
+   * chain. It sets up the security configuration for HTTP requests, including disabling
+   * basic authentication and CSRF protection, adding a custom JWT filter, setting the
+   * session management policy to stateless, and defining authorization rules for
+   * different request matchers.
+   */
   @Bean
   SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     JwtTokenFilter customFilter = new JwtTokenFilter(tokenProvider);
 
+    /**
+     * This configuration disables basic authentication and CSRF protection, adds the
+     * custom JWT filter before the UsernamePasswordAuthenticationFilter, sets the
+     * session management policy to stateless, and defines authorization rules for
+     * different request matchers. It allows unauthenticated access to certain endpoints
+     * and requires authentication for others.
+     */
     return http
         .httpBasic(AbstractHttpConfigurer::disable)
         .csrf(AbstractHttpConfigurer::disable)
@@ -77,26 +126,4 @@ public class SecurityConfig {
         .cors(cors -> {})
         .build();
   }
-
-//  @Override
-//  protected void configure(HttpSecurity http) throws Exception {
-//    http.httpBasic()
-//        .disable()
-//        .csrf()
-//        .disable()
-//        .sessionManagement()
-//        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//        .and()
-//        .authorizeRequests()
-//        .antMatchers("/auth/signin", "/auth/refresh", "/api-docs/**", "/swagger-ui.html**")
-//        .permitAll()
-//        .antMatchers("/api/**")
-//        .authenticated()
-//        .antMatchers("/users")
-//        .denyAll()
-//        .and()
-//        .cors()
-//        .and()
-//        .apply(new JwtConfigurer(tokenProvider));
-//  }
 }
