@@ -16,6 +16,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
    * query. So we need to use the entity name and the field name, not the table name
    * and the column name.
    */
-  @Query("SELECT u FROM User u WHERE u.userName =: userName")
+  @Query("SELECT u FROM User u WHERE u.userName = :userName")
   User findByUsername(@Param("userName") String userName);
 }
