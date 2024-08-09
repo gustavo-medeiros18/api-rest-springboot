@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/api-rest-springboot/api-rest-springboot.iml" filepath="$PROJECT_DIR$/api-rest-springboot/api-rest-springboot.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/secao-6-parametros-e-excecoes.iml" filepath="$PROJECT_DIR$/.idea/secao-6-parametros-e-excecoes.iml" />
     </modules>
   </component>
