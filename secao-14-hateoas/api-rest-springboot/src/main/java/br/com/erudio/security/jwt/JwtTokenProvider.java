@@ -79,6 +79,33 @@ public class JwtTokenProvider {
   }
 
   /**
+   * The `refreshToken` method is responsible for generating a new access token
+   * using a provided refresh token. It performs the following steps:
+   * <p>
+   * 1. Removes the "Bearer " prefix from the refresh token if it exists.
+   * 2. Verifies the refresh token using the HMAC256 algorithm and the encoded secret key.
+   * 3. Decodes the refresh token to extract the username and roles.
+   * 4. Calls the `createAccessToken` method to generate a new access token using the extracted username and roles.
+   * <p>
+   * If the refresh token is invalid or expired, an exception will be thrown during the verification process.
+   *
+   * @param refreshToken The refresh token used to generate a new access token.
+   * @return A `TokenVO` object containing the new access token and the original refresh token.
+   */
+  public TokenVO refreshToken(String refreshToken) {
+    if (refreshToken.contains("Bearer "))
+      refreshToken = refreshToken.substring("Bearer ".length());
+
+    JWTVerifier verifier = JWT.require(algorithm).build();
+    DecodedJWT decodedJWT = verifier.verify(refreshToken);
+
+    String username = decodedJWT.getSubject();
+    List<String> roles = decodedJWT.getClaim("roles").asList(String.class);
+
+    return createAccessToken(username, roles);
+  }
+
+  /**
    * The `getAccessToken` method creates a JWT access token based on the provided username,
    * roles, current date, and expiration date. It includes the following information in the token:
    * <p>
