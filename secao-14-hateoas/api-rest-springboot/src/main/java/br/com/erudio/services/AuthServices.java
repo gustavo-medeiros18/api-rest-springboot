@@ -87,4 +87,33 @@ public class AuthServices {
       throw new BadCredentialsException("Invalid username/password supplied");
     }
   }
+
+  /**
+   * This method handles the refresh token process for the user. It takes the user's username
+   * and the refresh token as input, validates the refresh token, and generates a new access token
+   * if the validation is successful. The new access token is then returned in the response.
+   *
+   * @param username     The username of the user requesting the refresh token.
+   * @param refreshToken The refresh token provided by the user.
+   * @return A ResponseEntity containing the new access token if the refresh token is valid.
+   */
+  @SuppressWarnings("rawtypes")
+  public ResponseEntity refreshToken(String username, String refreshToken) {
+    var user = repository.findByUsername(username);
+    var tokenResponse = new TokenVO();
+
+    if (user != null) {
+      /**
+       * The createAccessToken method of the JwtTokenProvider is used to generate a new access token
+       * for the authenticated user. It takes the username and user roles as parameters to include
+       * them in the token. The generated token is then encapsulated in a TokenVO object and returned
+       * in the response.
+       */
+      tokenResponse = tokenProvider.refreshToken(refreshToken);
+    } else
+      throw new UsernameNotFoundException("Username " + username + " not found");
+
+    return ResponseEntity.ok(tokenResponse);
+
+  }
 }
