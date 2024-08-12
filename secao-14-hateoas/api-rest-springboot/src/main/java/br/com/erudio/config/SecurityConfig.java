@@ -2,7 +2,6 @@ package br.com.erudio.config;
 
 import br.com.erudio.security.jwt.JwtTokenFilter;
 import br.com.erudio.security.jwt.JwtTokenProvider;
-import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,6 +17,7 @@ import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -43,7 +43,7 @@ public class SecurityConfig {
      * as a hash map to provide efficient storage and retrieval of encoders by their
      * names (keys).
      */
-    Map<String, PasswordEncoder> encoders = new HashedMap();
+    Map<String, PasswordEncoder> encoders = new HashMap<>();
 
     /**
      * The pbkdf2Encoder object is an instance of Pbkdf2PasswordEncoder, which uses
